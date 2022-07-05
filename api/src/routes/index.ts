@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import userRoutes from './client.routes'
+import eventOwnerRoutes from './event-owner.routes'
 
 const routers = Router()
-routers.use('/app', userRoutes)
+
+routers.use('/event-owner', eventOwnerRoutes)
 
 export default routers
