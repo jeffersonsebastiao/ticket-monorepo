@@ -37,9 +37,9 @@
 
 ## Desafio
 
-- Listar todos os event owners (Rota tipo GET)
-- Listar um unico event owner (Pegar o id pelo paramentro da url tipo GET ex: 'event-owner/1')
-- Atualizar um event owner (Pegar o id pelo paramentro da url tipo PUT ex: 'event-owner/1')
+- Listar todos os event owners (Rota tipo GET) - complete
+- Listar um unico event owner (Pegar o id pelo paramentro da url tipo GET ex: 'event-owner/1') - complete
+- Atualizar um event owner (Pegar o id pelo paramentro da url tipo PUT ex: 'event-owner/1') - complete
     ```
     {
         "name": "Sandro",
@@ -52,5 +52,5 @@
     
     ```
 
-- Apagar um event owner (Pegar o id pelo paramentro da url tipo DELETE ex: 'event-owner/1')
-    - retornar nada mas com um status 204
+- Apagar um event owner (Pegar o id pelo paramentro da url tipo DELETE ex: 'event-owner/1') - complete
+    - retornar nada mas com um status 204 - complete

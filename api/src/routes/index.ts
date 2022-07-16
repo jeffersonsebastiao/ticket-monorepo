@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import eventOwnerRoutes from './event-owner.routes'
 
-const routers = Router()
+const router = Router()
 
-routers.use('/event-owner', eventOwnerRoutes)
+router.use('/event-owner', eventOwnerRoutes)
 
-export default routers
+export default router

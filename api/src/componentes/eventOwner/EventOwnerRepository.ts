@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
+const prismaClient = new PrismaClient()
+
 interface ICreateEventOwner {
     name: string;
     email: string;
@@ -10,10 +12,10 @@ interface ICreateEventOwner {
 }
 
 export class EventOwnerRepository {
-    async createEventOwner(data: ICreateEventOwner) {
-        const prisma = new PrismaClient()
 
-        const newEventOwner = await prisma.eventOwner.create({
+    async createEventOwnerRepository(data: ICreateEventOwner) {
+
+        const eventOwnerRepository = await prismaClient.eventOwner.create({
             data: {
                 name: data.name,
                 email: data.email,
@@ -21,9 +23,10 @@ export class EventOwnerRepository {
                 password: data.password,
                 phone: data.phone,
                 pseudonym: data.pseudonym,
-            }
+            },
         })
-        
-        return newEventOwner
+
+        return eventOwnerRepository
     }
+    
 }
