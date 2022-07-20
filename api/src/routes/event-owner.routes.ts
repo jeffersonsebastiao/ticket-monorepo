@@ -7,34 +7,11 @@ const eventOwnerRouters = Router()
 const eventOwnerRepository = new EventOwnerRepository()
 const eventOwnerController = new EventOwnerController(eventOwnerRepository)
 
-eventOwnerRouters.post('/createeventowner', eventOwnerController.createEventOwner)
-//
-//
-eventOwnerRouters.get(`/findeventowner/:id`, function(request, response){
-    
-    const id = parseInt(request.params.id)
- 
-   return eventOwnerController.findEventOwner(response, id)
-})
-//
-//
-eventOwnerRouters.get('/listalleventowner', eventOwnerController.listAllEventeOwner)
-//
-//
-eventOwnerRouters.put('/updateeventowner/:id', function(request, response){
-
-    const id = parseInt(request.params.id)
-
-    return eventOwnerController.updateEventOwner(request, response, id)
-})
-//
-//
-eventOwnerRouters.delete('/deleteeventowner/:id', function(request, response){
-
-    const id = parseInt(request.params.id)
-
-    return eventOwnerController.deleteEventOwner(response, id)
-    
-})
+eventOwnerRouters
+    .get('/', eventOwnerController.listAllEventeOwner)
+    .get(`/:id`, eventOwnerController.findEventOwner)
+    .post('/', eventOwnerController.createEventOwner)
+    .put('/:id', eventOwnerController.updateEventOwner)
+    .delete('/:id', eventOwnerController.deleteEventOwner)
 
 export default eventOwnerRouters;

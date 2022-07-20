@@ -1,19 +1,16 @@
+import { bind } from "decko";
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { EventOwnerRepository } from "./EventOwnerRepository";
-import { request } from "http";
-
-const prismaClient = new PrismaClient()
 
 export class EventOwnerController {
     constructor(private readonly eventOwnerRepository: EventOwnerRepository) { }
 
     // Cria Um EventOwner
-    async createEventOwner(request: Request, response: Response) {
+    @bind
+    public async createEventOwner(request: Request, response: Response) {
 
         const { name, email, cpfCpnj, password, phone, pseudonym } = request.body
-
-        const eventOwnerRepository = await this.eventOwnerRepository.createEventOwnerRepository({
+        const eventOwnerRepository = await this.eventOwnerRepository.createEventOwner({
             name,
             email,
             cpfCpnj,
@@ -26,60 +23,50 @@ export class EventOwnerController {
     }
 
     // Retorna todos os registros
+    @bind
     async listAllEventeOwner(request: Request, response: Response) {
 
-        const listAllEventeOwner = await prismaClient.eventOwner.findMany()
+        const listAllEventeOwner = await this.eventOwnerRepository.listAllEventeOwner()
 
         return response.send(listAllEventeOwner)
     }
 
 
     // Encontra um registro pelo id na URL
-    async findEventOwner(response: Response, id: number) {
+    @bind
+    async findEventOwner(request: Request, response: Response) {
+        const id = parseInt(request.params.id)
+        const findEventOwner = await this.eventOwnerRepository.findEventOwner(id)
 
-        const findEventOwner = await prismaClient.eventOwner.findUnique({
-            where: {
-                id
-            }
-        })
-
-        if (!(findEventOwner))
+        if (!findEventOwner) {
             return response.status(404).send('usuario invalido!')
-            
+        }
 
-        
         return response.send(findEventOwner)
     }
 
     // Atualiza dados do eventowner
-    async updateEventOwner(request: Request, response: Response, id: number) {
- 
-         const { name, password, pseudonym } = request.body
- 
-         const updateEventOwner = await prismaClient.eventOwner.update({
-             where: {
-                 id
-             },
-             data: {
-                 name,
-                 password,
-                 pseudonym
-             }
-         })
- 
-         return response.send(updateEventOwner)
- 
-     }
+    @bind
+    async updateEventOwner(request: Request, response: Response) {
+        const { name, password, pseudonym } = request.body
+        const id = parseInt(request.params.id)
+        const updateEventOwner = await this.eventOwnerRepository.updateEventOwner(name, password, pseudonym, id)
 
-     //Deletar eventowner
-     async deleteEventOwner(response: Response, id: number){
-        
-        const deleteEventOwner = await prismaClient.eventOwner.delete({
-            where: {
-                id
-            }            
-        })
+        return response.send(updateEventOwner)
 
-     }
+    }
+
+    //Deletar eventowner
+    @bind
+    async deleteEventOwner(request: Request, response: Response) {
+        const id = parseInt(request.params.id)
+        await this.eventOwnerRepository.deleteEventOwner(id)
+        return response.status(204).send()
+    }
 
 }
+
+
+
+
+

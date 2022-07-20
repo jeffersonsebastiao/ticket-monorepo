@@ -13,9 +13,8 @@ interface ICreateEventOwner {
 
 export class EventOwnerRepository {
 
-    async createEventOwnerRepository(data: ICreateEventOwner) {
-
-        const eventOwnerRepository = await prismaClient.eventOwner.create({
+    async createEventOwner(data: ICreateEventOwner) {
+        const eventOwner = await prismaClient.eventOwner.create({
             data: {
                 name: data.name,
                 email: data.email,
@@ -26,7 +25,47 @@ export class EventOwnerRepository {
             },
         })
 
-        return eventOwnerRepository
+        return eventOwner
     }
-    
+
+    async listAllEventeOwner() {
+        const listAllEventeOwner = await prismaClient.eventOwner.findMany()
+
+        return listAllEventeOwner;
+    }
+
+    async findEventOwner(id: number) {
+
+        const findEventOwner = await prismaClient.eventOwner.findUnique({
+            where: {
+                id
+            }
+        })
+
+        return findEventOwner
+    }
+
+    async updateEventOwner(name: string, password: string, pseudonym: string, id: number) {
+        const updateEventOwner = await prismaClient.eventOwner.update({
+            where: {
+                id
+            },
+            data: {
+                name,
+                password,
+                pseudonym
+            }
+        })
+
+        return updateEventOwner
+
+    }
+
+    async deleteEventOwner(id: number) {
+        await prismaClient.eventOwner.delete({
+            where: {
+                id
+            }
+        })
+    }
 }
