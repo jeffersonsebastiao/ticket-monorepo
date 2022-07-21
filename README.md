@@ -35,22 +35,12 @@
     - client_id
     - event_id
 
-## Desafio
+# Cadastro de usuario
+- Verificar se email ja foi cadastrado
+- Verificar se CNPJ é valido
+- Verificar se senhas são iguais
 
-- Listar todos os event owners (Rota tipo GET) - complete
-- Listar um unico event owner (Pegar o id pelo paramentro da url tipo GET ex: 'event-owner/1') - complete
-- Atualizar um event owner (Pegar o id pelo paramentro da url tipo PUT ex: 'event-owner/1') - complete
-    ```
-    {
-        "name": "Sandro",
-        "email": "sandro@foice.com",
-        "cpfCpnj": 12345678,
-        "password": "compartilhada",
-        "phone": 12345678,
-        "pseudonym": "asdf"
-    }
-    
-    ```
-
-- Apagar um event owner (Pegar o id pelo paramentro da url tipo DELETE ex: 'event-owner/1') - complete
-    - retornar nada mas com um status 204 - complete
+# Desafio
+- email e cpfCnpj são uniques
+- EventOwner tem que ter uma coluna 'active': bolean
+- cpfCnpj para string

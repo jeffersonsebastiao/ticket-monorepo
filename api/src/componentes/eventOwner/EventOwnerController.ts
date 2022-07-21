@@ -3,24 +3,26 @@ import { Request, Response } from "express";
 import { EventOwnerRepository } from "./EventOwnerRepository";
 import { ICreateEventOwnerDTO } from "./ICreateEventOwner.dto";
 import { IUpdateEventOwnerDTO } from "./IUpdateEventOwner.dto";
+import { RegisterEventOwnerService } from "./services/RegisterEventOwnerService";
 
 export class EventOwnerController {
-    constructor(private readonly eventOwnerRepository: EventOwnerRepository) { }
+    constructor(private readonly eventOwnerRepository: EventOwnerRepository, private readonly registerEventOwner: RegisterEventOwnerService) { }
 
     // Cria Um EventOwner
     @bind
     public async createEventOwner(request: Request, response: Response) {
-        const { name, email, cpfCpnj, password, phone, pseudonym }: ICreateEventOwnerDTO = request.body
-        const eventOwnerRepository = await this.eventOwnerRepository.createEventOwner({
+        const { name, email, cpfCpnj, password, phone, pseudonym, confirmPassword }: ICreateEventOwnerDTO = request.body
+        await this.registerEventOwner.handle({
             name,
             email,
             cpfCpnj,
             password,
             phone,
-            pseudonym
+            pseudonym,
+            confirmPassword
         })
 
-        return response.send(eventOwnerRepository)
+        return response.status(204).send()
     }
 
     // Retorna todos os registros

@@ -1,11 +1,13 @@
 import { Router } from 'express'
 import { EventOwnerController } from "../componentes/eventOwner/EventOwnerController"
 import { EventOwnerRepository } from "../componentes/eventOwner/EventOwnerRepository"
+import { RegisterEventOwnerService } from '../componentes/eventOwner/services/RegisterEventOwnerService'
 
 const eventOwnerRouters = Router()
 
 const eventOwnerRepository = new EventOwnerRepository()
-const eventOwnerController = new EventOwnerController(eventOwnerRepository)
+const registerEventOwnerService = new RegisterEventOwnerService(eventOwnerRepository)
+const eventOwnerController = new EventOwnerController(eventOwnerRepository, registerEventOwnerService)
 
 eventOwnerRouters
     .get('/', eventOwnerController.listAllEventeOwner)

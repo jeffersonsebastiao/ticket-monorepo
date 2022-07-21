@@ -5,4 +5,5 @@ export interface ICreateEventOwnerDTO {
     password: string;
     phone: number;
     pseudonym: string;
+    confirmPassword: string;
 }

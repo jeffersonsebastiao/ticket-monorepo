@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma, PrismaClient } from "@prisma/client";
 import { ICreateEventOwnerDTO } from "./ICreateEventOwner.dto";
 import { IUpdateEventOwnerDTO } from "./IUpdateEventOwner.dto";
 
@@ -61,5 +61,15 @@ export class EventOwnerRepository {
                 id
             }
         })
+    }
+
+    async compareEventOwner(email: string): Promise<boolean> {
+        const eventOwnerExists = await prismaClient.eventOwner.findFirst({
+            where: {
+                email
+            }
+        })
+
+        return eventOwnerExists ? true : false
     }
 }
