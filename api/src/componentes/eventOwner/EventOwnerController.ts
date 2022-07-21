@@ -1,6 +1,8 @@
 import { bind } from "decko";
 import { Request, Response } from "express";
 import { EventOwnerRepository } from "./EventOwnerRepository";
+import { ICreateEventOwnerDTO } from "./ICreateEventOwner.dto";
+import { IUpdateEventOwnerDTO } from "./IUpdateEventOwner.dto";
 
 export class EventOwnerController {
     constructor(private readonly eventOwnerRepository: EventOwnerRepository) { }
@@ -8,8 +10,7 @@ export class EventOwnerController {
     // Cria Um EventOwner
     @bind
     public async createEventOwner(request: Request, response: Response) {
-
-        const { name, email, cpfCpnj, password, phone, pseudonym } = request.body
+        const { name, email, cpfCpnj, password, phone, pseudonym }: ICreateEventOwnerDTO = request.body
         const eventOwnerRepository = await this.eventOwnerRepository.createEventOwner({
             name,
             email,
@@ -48,9 +49,9 @@ export class EventOwnerController {
     // Atualiza dados do eventowner
     @bind
     async updateEventOwner(request: Request, response: Response) {
-        const { name, password, pseudonym } = request.body
+        const { name, password, pseudonym }: IUpdateEventOwnerDTO = request.body
         const id = parseInt(request.params.id)
-        const updateEventOwner = await this.eventOwnerRepository.updateEventOwner(name, password, pseudonym, id)
+        const updateEventOwner = await this.eventOwnerRepository.updateEventOwner({ id, name, password, pseudonym })
 
         return response.send(updateEventOwner)
 

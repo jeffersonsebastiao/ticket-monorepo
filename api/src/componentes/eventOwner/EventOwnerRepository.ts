@@ -1,19 +1,13 @@
 import { PrismaClient } from "@prisma/client";
+import { ICreateEventOwnerDTO } from "./ICreateEventOwner.dto";
+import { IUpdateEventOwnerDTO } from "./IUpdateEventOwner.dto";
+
 
 const prismaClient = new PrismaClient()
 
-interface ICreateEventOwner {
-    name: string;
-    email: string;
-    cpfCpnj: number;
-    password: string;
-    phone: number;
-    pseudonym: string;
-}
-
 export class EventOwnerRepository {
 
-    async createEventOwner(data: ICreateEventOwner) {
+    async createEventOwner(data: ICreateEventOwnerDTO) {
         const eventOwner = await prismaClient.eventOwner.create({
             data: {
                 name: data.name,
@@ -45,15 +39,15 @@ export class EventOwnerRepository {
         return findEventOwner
     }
 
-    async updateEventOwner(name: string, password: string, pseudonym: string, id: number) {
+    async updateEventOwner(data: IUpdateEventOwnerDTO) {
         const updateEventOwner = await prismaClient.eventOwner.update({
             where: {
-                id
+                id: data.id
             },
             data: {
-                name,
-                password,
-                pseudonym
+                name: data.name,
+                password: data.password,
+                pseudonym: data.pseudonym
             }
         })
 
