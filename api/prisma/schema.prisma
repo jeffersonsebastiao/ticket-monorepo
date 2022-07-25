@@ -14,10 +14,11 @@ model EventOwner {
   id        Int      @id @default(autoincrement())
   name      String
   pseudonym String
-  email     String
+  email     String   @unique
   phone     Int
-  cpfCpnj   Int
+  cpfCpnj   String   @unique
   password  String
+  active    Boolean  @default(true)
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
 
