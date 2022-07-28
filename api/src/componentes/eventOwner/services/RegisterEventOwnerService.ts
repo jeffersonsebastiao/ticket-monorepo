@@ -1,9 +1,16 @@
 import { EventOwnerRepository } from "../EventOwnerRepository";
 import { ICreateEventOwnerDTO } from "../ICreateEventOwner.dto";
 import { validateBr } from 'js-brasil';
+import { hash as hashGenerator } from "argon2";
+import { EmailService } from "../../../services/mail/EmailService";
+import { randomUUID } from "crypto";
+
 
 export class RegisterEventOwnerService {
-    constructor(private readonly eventOwnerRepository: EventOwnerRepository) { }
+    constructor(
+        private readonly eventOwnerRepository: EventOwnerRepository,
+        private readonly emailService: EmailService
+    ) {}
 
     async handle({ name, email, cpfCpnj, phone, pseudonym, password, confirmPassword }: ICreateEventOwnerDTO) {
         if (!name || !email || !cpfCpnj || !phone || !pseudonym || !password) {
@@ -22,14 +29,22 @@ export class RegisterEventOwnerService {
             throw new Error('Different passwords')
         }
 
+        const encriptedPassword = await hashGenerator(password)
+        const hash = randomUUID()
+        const expiredate =  new Date(Date.now() + 3000*100)
+        
         await this.eventOwnerRepository.createEventOwner({
             name,
             email,
             cpfCpnj,
-            password,
+            password: encriptedPassword,
             phone,
             pseudonym,
-            confirmPassword
+            confirmPassword,
+            hash,
+            expiredate
         })
+
+        await this.emailService.sendEmail(email, 'olha que bacana', `Codigo de confirmaçao: ${hash}`)
     }
 }

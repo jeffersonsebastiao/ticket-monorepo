@@ -10,6 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ValidationCode {
+  id           Int        @id @default(autoincrement())
+  hash         String     @unique
+  expiredate   DateTime
+  used         Boolean    @default(false)
+  eventOwnerId Int        @unique
+  EventOwner   EventOwner @relation(fields: [eventOwnerId], references: [id])
+
+  @@map("validation_code")
+}
+
 model EventOwner {
   id        Int      @id @default(autoincrement())
   name      String
@@ -22,7 +33,9 @@ model EventOwner {
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
 
-  event Event[]
+  event          Event[]
+  validationCode ValidationCode?
+
   @@map("event_owner")
 }
 
@@ -42,5 +55,6 @@ model Event {
   updatedAt     DateTime @default(now()) @updatedAt @db.Timestamp(0)
 
   owner EventOwner @relation(fields: [eventOwnerId], references: [id])
+
   @@map("event")
 }

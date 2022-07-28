@@ -35,12 +35,9 @@
     - client_id
     - event_id
 
-# Cadastro de usuario
-- Verificar se email ja foi cadastrado
-- Verificar se CNPJ é valido
-- Verificar se senhas são iguais
-
 # Desafio
-- email e cpfCnpj são uniques
-- EventOwner tem que ter uma coluna 'active': bolean
-- cpfCnpj para string
+- Criar rota de validação de cadastro
+    - Pegar hash da rota
+    - comparar hash com o do banco
+    - verificar a validade da data
+    - verificar se ja foi usado

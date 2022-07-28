@@ -16,6 +16,13 @@ export class EventOwnerRepository {
                 password: data.password,
                 phone: data.phone,
                 pseudonym: data.pseudonym,
+                active: false,
+                validationCode: {
+                    create: {
+                        hash: data.hash,
+                        expiredate: data.expiredate 
+                    }
+                },
             },
         })
 
@@ -72,4 +79,5 @@ export class EventOwnerRepository {
 
         return eventOwnerExists ? true : false
     }
+
 }
