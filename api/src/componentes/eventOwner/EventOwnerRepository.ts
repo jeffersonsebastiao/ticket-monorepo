@@ -20,7 +20,7 @@ export class EventOwnerRepository {
                 validationCode: {
                     create: {
                         hash: data.hash,
-                        expiredate: data.expiredate 
+                        expiredate: data.expiredate
                     }
                 },
             },
@@ -78,6 +78,39 @@ export class EventOwnerRepository {
         })
 
         return eventOwnerExists ? true : false
+    }
+
+    async validationEventOwner(hash: string) {
+        const validationEventOwner = await prismaClient.validationCode.findUnique({
+            include: {
+                EventOwner: {
+                    select: {
+                        email: true,
+                    }
+                }
+            },
+            where: {
+                hash
+            }
+        })
+
+        return validationEventOwner
+    }
+
+    async markAsUsed(hash: string) {
+        await prismaClient.validationCode.update({
+            data: {
+                used: true,
+                EventOwner: {
+                    update: {
+                        active: true
+                    }
+                }
+            },
+            where: {
+                hash
+            }
+        })
     }
 
 }

@@ -4,9 +4,14 @@ import { EventOwnerRepository } from "./EventOwnerRepository";
 import { ICreateEventOwnerDTO } from "./ICreateEventOwner.dto";
 import { IUpdateEventOwnerDTO } from "./IUpdateEventOwner.dto";
 import { RegisterEventOwnerService } from "./services/RegisterEventOwnerService";
+import { ValidateEventOwnerService } from "./services/ValidateEventOwnerService";
 
 export class EventOwnerController {
-    constructor(private readonly eventOwnerRepository: EventOwnerRepository, private readonly registerEventOwner: RegisterEventOwnerService) { }
+    constructor(
+        private readonly eventOwnerRepository: EventOwnerRepository,
+        private readonly registerEventOwner: RegisterEventOwnerService,
+        private readonly validateEventOwnerService: ValidateEventOwnerService,
+    ) { }
 
     // Cria Um EventOwner
     @bind
@@ -19,7 +24,7 @@ export class EventOwnerController {
             password,
             phone,
             pseudonym,
-            confirmPassword
+            confirmPassword,
         })
 
         return response.status(204).send()
@@ -67,4 +72,18 @@ export class EventOwnerController {
         return response.status(204).send()
     }
 
+    @bind
+    async validateEventOwner(request: Request, response: Response) {
+        const hash = request.params.hash
+
+        try {
+            await this.validateEventOwnerService.handle(hash)
+            return response.send('Sucesso!')
+        } catch (error) {
+            if (error instanceof Error) {
+                return response.status(400).send(error.message)
+            }
+            return response.status(400).send('Error')
+        }
+    }
 }

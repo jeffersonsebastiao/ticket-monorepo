@@ -37,7 +37,9 @@
 
 # Desafio
 - Criar rota de validação de cadastro
-    - Pegar hash da rota
-    - comparar hash com o do banco
-    - verificar a validade da data
-    - verificar se ja foi usado
+    -- Pegar hash da rota
+    -- comparar hash com o do banco
+    -- verificar se ja foi usado
+    -- verificar a validade da data
+    -- marcar o hash como usado
+    -- marcar o event owner como active

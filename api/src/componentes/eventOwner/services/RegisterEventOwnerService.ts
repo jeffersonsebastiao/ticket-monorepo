@@ -1,16 +1,24 @@
 import { EventOwnerRepository } from "../EventOwnerRepository";
-import { ICreateEventOwnerDTO } from "../ICreateEventOwner.dto";
 import { validateBr } from 'js-brasil';
 import { hash as hashGenerator } from "argon2";
 import { EmailService } from "../../../services/mail/EmailService";
 import { randomUUID } from "crypto";
 
+export interface ICreateEventOwnerDTO {
+    name: string;
+    email: string;
+    cpfCpnj: string;
+    password: string;
+    phone: number;
+    pseudonym: string;
+    confirmPassword: string;
+}
 
 export class RegisterEventOwnerService {
     constructor(
         private readonly eventOwnerRepository: EventOwnerRepository,
         private readonly emailService: EmailService
-    ) {}
+    ) { }
 
     async handle({ name, email, cpfCpnj, phone, pseudonym, password, confirmPassword }: ICreateEventOwnerDTO) {
         if (!name || !email || !cpfCpnj || !phone || !pseudonym || !password) {
@@ -31,8 +39,8 @@ export class RegisterEventOwnerService {
 
         const encriptedPassword = await hashGenerator(password)
         const hash = randomUUID()
-        const expiredate =  new Date(Date.now() + 3000*100)
-        
+        const expiredate = new Date(Date.now() + 30000 * 100)
+
         await this.eventOwnerRepository.createEventOwner({
             name,
             email,
