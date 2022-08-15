@@ -113,4 +113,15 @@ export class EventOwnerRepository {
         })
     }
 
+    async loginByEmail(email: string) {
+
+        const loginByEmail = await prismaClient.eventOwner.findUnique({
+            where: {
+                email
+            }
+        })
+
+        return loginByEmail
+    }
+
 }

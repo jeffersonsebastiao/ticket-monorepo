@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { EventOwnerRepository } from "./EventOwnerRepository";
 import { ICreateEventOwnerDTO } from "./ICreateEventOwner.dto";
 import { IUpdateEventOwnerDTO } from "./IUpdateEventOwner.dto";
+import { LoginService } from "./services/LoginService";
 import { RegisterEventOwnerService } from "./services/RegisterEventOwnerService";
 import { ValidateEventOwnerService } from "./services/ValidateEventOwnerService";
 
@@ -11,6 +12,7 @@ export class EventOwnerController {
         private readonly eventOwnerRepository: EventOwnerRepository,
         private readonly registerEventOwner: RegisterEventOwnerService,
         private readonly validateEventOwnerService: ValidateEventOwnerService,
+        private readonly loginService: LoginService
     ) { }
 
     // Cria Um EventOwner
@@ -85,5 +87,14 @@ export class EventOwnerController {
             }
             return response.status(400).send('Error')
         }
+    }
+
+    @bind
+    async loginEventOwner(request: Request, response: Response) {
+        const { email, senha } = request.body
+
+        const token = await this.loginService.handle(email, senha)
+
+        return response.send(token)
     }
 }
