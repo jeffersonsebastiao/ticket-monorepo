@@ -49,8 +49,9 @@ model Event {
   state         String
   city          String
   address       String
+  zipCode       String
   number        Int
-  published     Boolean
+  published     Boolean  @default(false)
   createdAt     DateTime @default(now()) @db.Timestamp(0)
   updatedAt     DateTime @default(now()) @updatedAt @db.Timestamp(0)
 

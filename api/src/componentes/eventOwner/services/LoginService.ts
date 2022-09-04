@@ -25,8 +25,8 @@ export class LoginService {
             id: loginByEmail.id
         }
 
-        const keyJwt = sign(tokenPayLoad, 'key')
+        const token = sign(tokenPayLoad, 'key')
 
-        return keyJwt
+        return { auth: true, token }
     }
 }

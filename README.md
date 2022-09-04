@@ -36,10 +36,8 @@
     - event_id
 
 # Desafio
-- Criar rota de validação de cadastro
-    -- Pegar hash da rota
-    -- comparar hash com o do banco
-    -- verificar se ja foi usado
-    -- verificar a validade da data
-    -- marcar o hash como usado
-    -- marcar o event owner como active
+- tray catch nos metodos do controller
+
+- criar envento
+    - data do evento não pode ser menor que hoje
+    - published como false
