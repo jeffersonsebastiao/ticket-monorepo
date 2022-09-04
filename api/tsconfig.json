@@ -12,10 +12,15 @@
     "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
-    // "typeRoots": ["./src/@types", "node_modules/@types"]
+    "typeRoots": [
+      "./src/@types",
+      "node_modules/@types"
+    ]
   }
 }

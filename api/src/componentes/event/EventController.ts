@@ -11,18 +11,13 @@ export class EventController {
 
     @bind
     async createEvent(request: Request, response: Response) {
+        const { id } = request.context.user
 
-        const token = request.headers['authorization']
-        const { address, city, description, eventDateHour, eventOwnerId, number, state, ticketLimit, title, zipCode }: ICreateEvent = request.body
+        const { address, city, description, eventDateHour, number, state, ticketLimit, title, zipCode }: ICreateEvent = request.body
 
         try {
 
-            if (!token) {
-                throw new Error('error, invalid token')
-            }
-            const decodedID = verify(token, 'key') as { id: number }
-
-            const eventService = await this.createEventService.handle({ address, city, description, eventDateHour, eventOwnerId: decodedID.id, number, state, ticketLimit, title, zipCode })
+            const eventService = await this.createEventService.handle({ address, city, description, eventDateHour, eventOwnerId: id, number, state, ticketLimit, title, zipCode })
 
             return response.status(201).json(eventService)
         } catch (error) {
