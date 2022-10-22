@@ -41,3 +41,9 @@
 - criar envento
     - data do evento não pode ser menor que hoje
     - published como false
+    
+    
+# Ver mais sobre:
+    - reatividade
+    - props
+    - slots
